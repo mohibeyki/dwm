@@ -1,5 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
+#include <X11/XF86keysym.h>
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -9,6 +11,14 @@ static const int usealtbar          = 1;        /* 1 means use non-dwm status ba
 static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
 static const char *alttrayname      = "tray";    /* Polybar tray instance name */
 static const char *altbarcmd        = "$HOME/.config/polybar/launch.sh"; /* Alternate bar launch command */
+static const char *m_volupcmd[]     = { "pulseaudio-ctl", "up", "1%", NULL };
+static const char *m_voldowncmd[]   = { "pulseaudio-ctl", "down", "1%", NULL };
+static const char *m_mutecmd[]      = { "pulseaudio-ctl", "mute", NULL };
+static const char *m_playcmd[]      = { "playerctl", "play-pause", NULL };
+static const char *m_pausecmd[]     = { "playerctl", "play-pause", NULL };
+static const char *m_stopcmd[]      = { "playerctl", "stop", NULL };
+static const char *m_nextcmd[]      = { "playerctl", "next", NULL };
+static const char *m_prevcmd[]      = { "playerctl", "previous", NULL };
 static const char *fonts[]          = { "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#222222";
@@ -99,7 +109,15 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} }, 
+	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} },
+    { 0,         XF86XK_AudioRaiseVolume,      spawn,          {.v = m_volupcmd} },
+    { 0,         XF86XK_AudioLowerVolume,      spawn,          {.v = m_voldowncmd} },
+    { 0,                XF86XK_AudioMute,      spawn,          {.v = m_mutecmd} },
+    { 0,                XF86XK_AudioPlay,      spawn,          {.v = m_playcmd} },
+    { 0,               XF86XK_AudioPause,      spawn,          {.v = m_pausecmd} },
+    { 0,                XF86XK_AudioStop,      spawn,          {.v = m_stopcmd} },
+    { 0,                XF86XK_AudioNext,      spawn,          {.v = m_nextcmd} },
+    { 0,                XF86XK_AudioPrev,      spawn,          {.v = m_prevcmd} },
 };
 
 /* button definitions */

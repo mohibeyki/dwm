@@ -1,6 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
 #include <X11/XF86keysym.h>
+#include "layouts.c"
+#include "fibonacci.c"
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -50,7 +52,6 @@ static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] *
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
-#include "layouts.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
@@ -59,6 +60,8 @@ static const Layout layouts[] = {
     { "|M|",      centeredmaster },
     { ">M>",      centeredfloatingmaster },
 	{ "HHH",      grid },
+ 	{ "[@]",      spiral },
+ 	{ "[\\]",     dwindle },
 };
 
 /* key definitions */
@@ -92,12 +95,14 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[3]} },
-    // { MODKEY,                       XK_u,      setlayout,      {.v = &layouts[4]} },
-	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[5]} },
+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} }, // Tile
+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} }, // Float
+	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} }, // Monocle
+	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[3]} }, // Centered Master
+    { MODKEY|ShiftMask,             XK_g,      setlayout,      {.v = &layouts[4]} }, // Centered Floating Master
+	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[5]} }, // Grid
+	{ MODKEY|ShiftMask,             XK_u,      setlayout,      {.v = &layouts[6]} }, // Spiral
+    { MODKEY,                       XK_u,      setlayout,      {.v = &layouts[7]} }, // Dwindle
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
